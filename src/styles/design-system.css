@@ -1,0 +1,229 @@
+/* Kontextlager Design System - "Experimental Neon Lab" */
+
+:root {
+  /* Background layers */
+  --bg-deep: #0a0a0f;
+  --bg-primary: #12121a;
+  --bg-elevated: #1a1a24;
+  --bg-surface: #24243a;
+
+  /* Neon accents */
+  --neon-pink: #FF006E;
+  --neon-purple: #8338EC;
+  --neon-blue: #3A86FF;
+  --neon-green: #06FFA5;
+  --neon-yellow: #FFE66D;
+  --neon-orange: #FF9F1C;
+
+  /* Text */
+  --text-primary: #FAFAFA;
+  --text-secondary: #A0A0B0;
+  --text-muted: #606070;
+
+  /* Glow effects */
+  --glow-pink: 0 0 20px rgba(255, 0, 110, 0.5);
+  --glow-purple: 0 0 20px rgba(131, 56, 236, 0.5);
+  --glow-blue: 0 0 20px rgba(58, 134, 255, 0.5);
+  --glow-green: 0 0 20px rgba(6, 255, 165, 0.5);
+  --glow-yellow: 0 0 20px rgba(255, 230, 109, 0.5);
+  --glow-orange: 0 0 20px rgba(255, 159, 28, 0.5);
+}
+
+/* Base styles */
+html {
+  background: var(--bg-deep);
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Headings use display font */
+h1, h2, h3, h4, h5, h6,
+.font-display {
+  font-family: 'Space Mono', monospace;
+}
+
+/* Subtle grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 0, 110, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 110, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Neon text glow utilities */
+.text-glow-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+}
+
+.text-glow-purple {
+  color: var(--neon-purple);
+  text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+}
+
+.text-glow-blue {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+}
+
+.text-glow-green {
+  color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+}
+
+/* Neon pulse animation */
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px currentColor;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 25px currentColor;
+    opacity: 0.8;
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+/* Primary button with neon gradient */
+.btn-neon {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+  color: white;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  box-shadow: var(--glow-pink);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-neon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 0, 110, 0.7);
+}
+
+.btn-neon:active {
+  transform: translateY(0);
+}
+
+/* Ghost button */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  font-family: 'Space Mono', monospace;
+  border: 2px solid var(--bg-surface);
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: var(--glow-blue);
+}
+
+/* Card with hover glow */
+.card-neon {
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-surface);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.card-neon:hover {
+  border-color: var(--neon-purple);
+  box-shadow: var(--glow-purple);
+  transform: translateY(-4px);
+}
+
+/* Form inputs */
+.input-neon {
+  background: var(--bg-deep);
+  border: 2px solid var(--bg-surface);
+  border-radius: 4px;
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-neon:focus {
+  border-color: var(--neon-blue);
+  box-shadow: var(--glow-blue);
+}
+
+.input-neon::placeholder {
+  color: var(--text-muted);
+}
+
+/* Trigger badge colors */
+.trigger-gps { color: var(--neon-blue); border-color: var(--neon-blue); }
+.trigger-qr { color: var(--neon-pink); border-color: var(--neon-pink); }
+.trigger-shake { color: var(--neon-orange); border-color: var(--neon-orange); }
+.trigger-tilt { color: var(--neon-purple); border-color: var(--neon-purple); }
+.trigger-compass { color: var(--neon-yellow); border-color: var(--neon-yellow); }
+.trigger-touch { color: var(--neon-green); border-color: var(--neon-green); }
+.trigger-hold { color: var(--neon-pink); border-color: var(--neon-pink); }
+.trigger-timer { color: var(--neon-blue); border-color: var(--neon-blue); }
+.trigger-proximity { color: var(--neon-purple); border-color: var(--neon-purple); }
+
+/* Trigger badge base */
+.trigger-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Map marker styles */
+.marker-user {
+  width: 20px;
+  height: 20px;
+  background: var(--neon-blue);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: var(--glow-blue);
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.marker-object {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Marker colors by trigger type */
+.marker-gps { background: var(--neon-blue); }
+.marker-qr { background: var(--neon-pink); }
+.marker-shake { background: var(--neon-orange); }
+.marker-tilt { background: var(--neon-purple); }
+.marker-compass { background: var(--neon-yellow); }
+.marker-touch { background: var(--neon-green); }
+.marker-hold { background: var(--neon-pink); }
+.marker-timer { background: var(--neon-blue); }
+.marker-proximity { background: var(--neon-purple); }

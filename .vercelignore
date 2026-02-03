@@ -1,0 +1,4 @@
+claude-logs
+.venv
+__pycache__
+*.py
