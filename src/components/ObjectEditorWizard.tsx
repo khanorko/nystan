@@ -1018,6 +1018,7 @@ function TriggerConfig({
                     </span>
                     {spinnerContent.length > 2 && (
                       <button
+                        type="button"
                         onClick={() => {
                           const newContent = spinnerContent.filter((_, idx) => idx !== i);
                           onSpinnerChange(newContent);
@@ -1093,6 +1094,7 @@ function TriggerConfig({
               {/* Add option button */}
               {spinnerContent.length < 8 && (
                 <button
+                  type="button"
                   onClick={() => {
                     const newId = String(spinnerContent.length + 1);
                     onSpinnerChange([...spinnerContent, { id: newId, label: `Val ${spinnerContent.length + 1}` }]);
@@ -1173,7 +1175,12 @@ function TriggerConfig({
                 { value: 'chat', label: '💬 Chat', desc: 'Användaren chattar med AI' },
               ].map((mode) => (
                 <button
+                  type="button"
                   key={mode.value}
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    updateParam('mode', mode.value);
+                  }}
                   onClick={() => updateParam('mode', mode.value)}
                   className="flex-1 p-3 rounded-lg border-2 text-left transition-all"
                   style={{
@@ -1194,18 +1201,29 @@ function TriggerConfig({
             <label className="block text-sm font-display font-bold mb-2" style={{ color: COLORS.neonPurple }}>
               PERSONLIGHET
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 relative z-10">
               {AI_PERSONALITIES.map((p) => (
                 <button
+                  type="button"
                   key={p.id}
-                  onClick={() => {
-                    updateParam('personality', p.id);
-                    if (!p.isCustom) {
-                      updateParam('systemPrompt', p.prompt);
-                      updateParam('tone', p.tone);
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    if (p.isCustom) {
+                      onChange({ ...params, personality: p.id });
+                    } else {
+                      onChange({ ...params, personality: p.id, systemPrompt: p.prompt, tone: p.tone });
                     }
                   }}
-                  className="p-3 rounded-lg border-2 text-left transition-all"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (p.isCustom) {
+                      onChange({ ...params, personality: p.id });
+                    } else {
+                      onChange({ ...params, personality: p.id, systemPrompt: p.prompt, tone: p.tone });
+                    }
+                  }}
+                  className="p-3 rounded-lg border-2 text-left transition-all cursor-pointer"
                   style={{
                     backgroundColor: selectedPersonality.id === p.id ? COLORS.neonPurple + '20' : COLORS.deep,
                     borderColor: selectedPersonality.id === p.id ? COLORS.neonPurple : COLORS.surface,

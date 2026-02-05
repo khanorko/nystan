@@ -3,6 +3,8 @@
  * Provides AI-powered triggers for Kontextlager
  */
 
+import { reverseGeocode, buildLocationDescription } from './geocoding';
+
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 interface Message {
@@ -65,18 +67,24 @@ export async function getAICompletion(
 
 /**
  * Get place information based on coordinates
+ * Uses reverse geocoding to provide street/neighbourhood/city context to AI
  */
 export async function getPlaceInfo(
   lat: number,
   lng: number,
   customPrompt?: string
 ): Promise<AIResponse> {
+  // Get address details via reverse geocoding
+  const place = await reverseGeocode(lat, lng);
+  const locationDescription = buildLocationDescription(place, lat, lng);
+
   const systemPrompt = customPrompt || `Du är en lokal guide som berättar intressanta saker om platser.
 Svara kort och engagerande (max 2-3 meningar).
 Inkludera gärna historiska eller kulturella fakta.
 Svara på svenska.`;
 
-  const userMessage = `Berätta något intressant om platsen med koordinater: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+  const userMessage = `Berätta något intressant om denna plats:
+- ${locationDescription}`;
 
   return getAICompletion([
     { role: 'system', content: systemPrompt },
